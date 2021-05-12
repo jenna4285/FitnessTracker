@@ -1,11 +1,14 @@
 const express = require ('express');
-const morgan = require('morgan');
+const router = express.Router();
+const logger = require('morgan');
 const mongoose = require('mongoose');
+
 // const chartjs
 
 const PORT = process.env.PORT || 3000;
 
 const db = require("./models");
+const routes = require('./routes');
 
 const app = express();
 
@@ -13,6 +16,8 @@ app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(routes);
 
 app.use(express.static("public"));
 
