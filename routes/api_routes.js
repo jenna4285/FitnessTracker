@@ -3,13 +3,25 @@ const router = express.Router();
 const Workout = require('../models/workout.js');
 const mongoose = require('mongoose');
 
-//  GET, PUT, & POST /api/workouts
-
-// router.put('/workouts/:id', (req, res) => {
-
-// });
 
 // GET /api/workouts/range
+
+router.get('/workouts/range', (req, res) => {
+  Workout.aggregate([
+    {
+      $addFields: {
+        totalDuration: {$sum: "$exercises.duration"},
+        totalWeight: { $sum: "$exercises.weight"
+        }
+      }
+    }
+  ]).sort({date: -1}).limit(7).then((results) => {
+  res.json(results);
+})  
+  .catch((error)=> {
+    res.json(error);
+  })
+});
 
 router.get('/workouts', (req, res) => {
   Workout.aggregate([
