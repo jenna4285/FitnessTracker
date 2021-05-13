@@ -3,9 +3,6 @@ const router = express.Router();
 const Workout = require('../models/workout.js');
 const mongoose = require('mongoose');
 
-
-// GET /api/workouts/range
-
 router.get('/workouts/range', (req, res) => {
   Workout.aggregate([
     {
@@ -15,7 +12,7 @@ router.get('/workouts/range', (req, res) => {
         }
       }
     }
-  ]).sort({date: -1}).limit(7).then((results) => {
+  ]).sort({day: -1}).limit(7).then((results) => {
   res.json(results);
 })  
   .catch((error)=> {
@@ -32,7 +29,7 @@ router.get('/workouts', (req, res) => {
             }
           }
         }
-      ]).sort({date: -1}).limit(7).then((results) => {
+      ]).sort({day: -1}).limit(7).then((results) => {
       res.json(results);
     })  
       .catch((error)=> {
