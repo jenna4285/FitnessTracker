@@ -1,14 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const mongojs = require('mongojs');
+const { db } = require('../models/workout');
+const path = require('path');
 
 // route to display HTML
-// router.get('/', async (req, res) => {
-//     const continueWorkout = await Workout.findAll().catch((err) => { 
-//       console.log(continueWorkout);
-//         res.json(err);
-//       });
-//         const lastWorkout = continueWorkout.map((workout) => workout.get({ plain: true }));
-//         res.render('index', { continueWorkout});
-//       });
+
+router.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"))
+});
+
+router.get("/stats", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"))
+});
+
+router.get('/exercise', (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/exercise.html"))
+});
 
 module.exports = router;
