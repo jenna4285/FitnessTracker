@@ -12,7 +12,15 @@ const mongoose = require('mongoose');
 // GET /api/workouts/range
 
 router.get('/workouts', (req, res) => {
-    Workout.find().then((results) => {
+  Workout.aggregate([
+        {
+          $addFields: {
+            totalDuration: {$sum: "$exercises.duration"},
+            totalWeight: { $sum: "$exercises.weight"
+            }
+          }
+        }
+      ]).sort({date: -1}).limit(7).then((results) => {
       res.json(results);
     })  
       .catch((error)=> {
